@@ -1,13 +1,13 @@
 import os
 import telebot
 from dotenv import load_dotenv
-from .letters import Letters
+from .letters import JLetters
 
 
 load_dotenv()
 API = os.getenv("API_KEY")
 bot = telebot.TeleBot(API)
-jletters = Letters()
+jletters = JLetters()
 
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
@@ -29,7 +29,7 @@ def send_welcome(message):
 @bot.message_handler(commands=["help"])
 def send_help(message):
 
-    #TODO : Write command lists
+    # TODO : Write command lists
     help_message = (
         "<b>KanaBot command lists:</b>\n\n"
         "(COMING SOON)"
