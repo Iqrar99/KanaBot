@@ -12,16 +12,15 @@ def send_welcome(message):
     user_first_name = message.from_user.first_name
     user_last_name = message.from_user.last_name
 
-    welcome_message = f"""
-    Hello <b>{user_first_name} {user_last_name}</b>! Welcome to <b>KanaBot</b>!
-KanaBot will help you to memorize Kana letters by giving you some questions.
-Choose your quiz type:
-/hiragana - Start hiragana quiz.
-/katakana - Start katakana quiz.
-/exam - Start hiragana + katakana quiz.
-
-If you need help for all commands list, type /help.
-    """
+    welcome_message = (
+        f"Hello <b>{user_first_name} {user_last_name}</b>! Welcome to <b>KanaBot</b>!\n"
+        "KanaBot will help you to memorize Kana letters by giving you some questions.\n"
+        "Choose your quiz type:\n"
+        "/hiragana - Start hiragana quiz.\n"
+        "/katakana - Start katakana quiz.\n"
+        "/exam - Start hiragana + katakana quiz.\n\n"    
+        "If you need help for all commands list, type /help."
+    )
 
     bot.reply_to(message, welcome_message, parse_mode="HTML")
 
@@ -29,11 +28,11 @@ If you need help for all commands list, type /help.
 def send_help(message):
 
     #TODO : Write command lists
-    help_message = """
-    <b>KanaBot command lists:</b>
+    help_message = (
+        "<b>KanaBot command lists:</b>\n\n"
+        "(COMING SOON)"
+    )
 
-(Coming Soon)
-    """
     bot.reply_to(message, help_message, parse_mode="HTML")
 
 
