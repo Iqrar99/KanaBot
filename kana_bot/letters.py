@@ -81,4 +81,5 @@ class JLetters(object):
 # For testing purpose
 if __name__ == "__main__":
     jletters = JLetters()
-    print(jletters.get_jletter("a", "TEST"))  # will prints あ
+    print(jletters.get_jletter("a"))  # will prints あ
+    print(jletters.get_jletter("a", "TEST"))  # will raises an error
