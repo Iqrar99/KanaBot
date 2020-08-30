@@ -35,11 +35,11 @@ class JLetters(object):
 
     def _get_char_by_vowel(self, letters: str, vowel: str):
         idx = {
-            "a" : 0,
-            "i" : 1,
-            "u" : 2,
-            "e" : 3,
-            "o" : 4
+            "a": 0,
+            "i": 1,
+            "u": 2,
+            "e": 3,
+            "o": 4
         }
 
         return letters[idx[vowel]]
