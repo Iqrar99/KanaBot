@@ -1,11 +1,13 @@
 import os
 import telebot
 from dotenv import load_dotenv
+from .letters import Letters
 
 
 load_dotenv()
 API = os.getenv("API_KEY")
 bot = telebot.TeleBot(API)
+jletters = Letters()
 
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
