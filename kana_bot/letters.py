@@ -3,14 +3,18 @@ class JLetters(object):
     A class to provide Kana (Japanese letters).
     """
 
-    # TODO : Add diacritics
     HIRAGANA_LETTERS = {
         "vowel": "あいうえお",
         "k": "かきくけこ",
+        "g": "がぎぐげご",
         "s": "さしすせそ",
+        "z": "ざじずぜぞ",
         "t": "たちつてと",
+        "d": "だぢづでど",
         "n": "なにぬねの",
         "h": "はひふへほ",
+        "b": "ばびぶべぼ",
+        "p": "ぱぴぷぺぽ",
         "m": "まみむめも",
         "y": "やいゆえよ",  # It's actually only やゆよ
         "r": "らりるれろ",
@@ -20,10 +24,15 @@ class JLetters(object):
     KATAKANA_LETTERS = {
         "vowel": "アイウエオ",
         "k": "カキクケコ",
+        "g": "ガギグゲゴ",
         "s": "サシスセソ",
+        "z": "ザジズゼゾ",
         "t": "タチツテト",
+        "d": "ダヂヅデド",
         "n": "ナニヌネノ",
         "h": "ハヒフヘホ",
+        "b": "バビブベボ",
+        "p": "パピプペポ",
         "m": "マミムメモ",
         "y": "ヤイユエヨ",  # It's actually only ヤユヨ
         "r": "ラリルレロ",
@@ -31,7 +40,7 @@ class JLetters(object):
         "nn": "ン"
     }
     vowel = "aiueo"
-    japanese_consonant = "kstnhmyrwn"  # TODO : Add other consonant 
+    japanese_consonant = "kgsztdnhbpmyrwn"  # TODO : Add other consonant 
 
     def _get_char_by_vowel(self, letters: str, vowel: str):
         idx = {
@@ -47,7 +56,7 @@ class JLetters(object):
 
     def get_jletter(self, romaji: str, kana_type="HIRAGANA") -> str:
         """
-        This function will get the Japanese characters based on romaji.
+        This function will get a Japanese character based on romaji.
         
         Parameters
         ----------
