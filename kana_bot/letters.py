@@ -104,7 +104,9 @@ class JLetters(object):
         elif kana_type == "KATAKANA":
             letters = self.KATAKANA_LETTERS
         else:
-            raise KanaTypeError
+            raise KanaTypeError(
+                "Unrecognized `kana_type`. Should be only 'HIRAGANA' or 'KATAKANA'. " +
+                f"Got '{kana_type}' instead.")
 
         if len(romaji) == 1:
             if romaji in self.vowel:
@@ -155,3 +157,4 @@ class JLetters(object):
 # For testing purpose
 if __name__ == "__main__":
     jletters = JLetters()
+    print(jletters.get_jletter("a", "sasa"))
