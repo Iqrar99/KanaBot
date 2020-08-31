@@ -120,6 +120,9 @@ class JLetters(object):
             if romaji == "nn":
                 return letters[romaji]
 
+            # TODO : add special cases for a letter that has different romaji
+            # Example: di and ji = ぢ
+
             consonant = romaji[0]
             vowel = romaji[1]
             if consonant in self.vowel:
