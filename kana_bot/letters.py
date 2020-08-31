@@ -1,3 +1,11 @@
+from kana_bot_error import (
+    ConsonantError,
+    EmptyRomajiError,
+    KanaTypeError,
+    LetterNotFoundError,
+    RomajiLengthError
+)
+
 class JLetters(object):
     """
     A class to provide Kana (Japanese letters).
@@ -88,7 +96,7 @@ class JLetters(object):
         """
 
         if romaji == "":
-            raise Exception("Can not accept empty string.")
+            raise EmptyRomajiError("Can not accept empty string.")
 
         letters: dict
         if kana_type == "HIRAGANA":
@@ -96,7 +104,7 @@ class JLetters(object):
         elif kana_type == "KATAKANA":
             letters = self.KATAKANA_LETTERS
         else:
-            raise Exception("Unrecognized `kana_type`. Should be only 'HIRAGANA' or 'KATAKANA'.")
+            raise KanaTypeError
 
         if len(romaji) == 1:
             if romaji in self.vowel:
@@ -104,7 +112,9 @@ class JLetters(object):
             elif romaji == "n":
                 return letters["nn"]
             else:
-                raise Exception("Letter can not be found. Please type your romaji correctly.")
+                raise LetterNotFoundError(
+                    f"Japanese letter for '{romaji}' can not be found. " +
+                    "Please type your romaji correctly.")
         
         elif len(romaji) == 2:
             if romaji == "nn":
@@ -113,9 +123,10 @@ class JLetters(object):
             consonant = romaji[0]
             vowel = romaji[1]
             if consonant in self.vowel:
-                raise Exception("First character should be consonant.")
+                raise ConsonantError(
+                    f"'{consonant}' is a vowel. First character should be consonant instead.")
             elif consonant not in self.japanese_consonant:
-                raise Exception("The consonant is not used in Kana.")
+                raise ConsonantError(f"The consonant '{consonant}' is not used in Kana.")
             else:
                 return self._get_char_by_vowel(letters[consonant], vowel)
 
@@ -126,21 +137,18 @@ class JLetters(object):
                 "tsu": self._get_char_by_vowel(letters["t"], "u")
             }
 
-            if romaji in three_chars_romaji:
-                return three_chars_romaji[romaji]
+            if romaji not in three_chars_romaji:
+                raise LetterNotFoundError(
+                    f"Unrecognized romaji for '{romaji}'. Please type romaji correctly.")
             else:
-                return Exception("Unrecognized romaji. Please type romaji correctly.")
+                return three_chars_romaji[romaji]
 
         else:
-            raise Exception("Romaji for one Japanese letter should not exceed three chars.")
-
+            raise RomajiLengthError(
+                "Romaji for one Japanese letter should not exceed 3 chars. " +
+                f"len('{romaji}') > 3.")
 
 
 # For testing purpose
 if __name__ == "__main__":
     jletters = JLetters()
-    print(jletters.get_jletter("a"))  # will prints あ
-    print(jletters.get_jletter("ka"))  # will prints か
-    print(jletters.get_jletter("tsu", "KATAKANA"))  # will prints ツ
-    print(jletters.get_jletter("tu", "KATAKANA"))  # will prints ツ
-
