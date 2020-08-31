@@ -121,9 +121,9 @@ class JLetters(object):
 
         elif len(romaji) == 3:  # will handle special cases like  shi, chi, and tsu
             three_chars_romaji = {
-                "shi" : self._get_char_by_vowel(letters["s"], "i"),
-                "chi" : self._get_char_by_vowel(letters["t"], "i"),
-                "tsu" : self._get_char_by_vowel(letters["t"], "u")
+                "shi": self._get_char_by_vowel(letters["s"], "i"),
+                "chi": self._get_char_by_vowel(letters["t"], "i"),
+                "tsu": self._get_char_by_vowel(letters["t"], "u")
             }
 
             if romaji in three_chars_romaji:
@@ -141,6 +141,6 @@ if __name__ == "__main__":
     jletters = JLetters()
     print(jletters.get_jletter("a"))  # will prints あ
     print(jletters.get_jletter("ka"))  # will prints か
-    print(jletters.get_jletter("tsu", "KATAKANA"))  # will prints メ
-    print(jletters.get_jletter("tu", "KATAKANA"))  # will prints メ
+    print(jletters.get_jletter("tsu", "KATAKANA"))  # will prints ツ
+    print(jletters.get_jletter("tu", "KATAKANA"))  # will prints ツ
 
