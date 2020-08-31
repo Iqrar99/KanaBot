@@ -40,9 +40,25 @@ class JLetters(object):
         "nn": "ン"
     }
     vowel = "aiueo"
-    japanese_consonant = "kgsztdnhbpmyrwn"  # TODO : Add other consonant 
+    japanese_consonant = "kgsztdnhbpmyrwn" 
 
     def _get_char_by_vowel(self, letters: str, vowel: str):
+        """
+        This function will grab a specific letter based on the vowel.
+        
+        Parameters
+        ----------
+        letters : str
+            Some letters that need to be picked one of them.
+        vowel : str
+            Vowel target.
+
+        Returns
+        -------
+        str
+            The Japanese letter user wants.
+        """
+
         idx = {
             "a": 0,
             "i": 1,
@@ -68,8 +84,11 @@ class JLetters(object):
         Returns
         -------
         str
-            The letter user wants.
+            The Japanese letter user wants.
         """
+
+        if romaji == "":
+            raise Exception("Can not accept empty string.")
 
         letters: dict
         if kana_type == "HIRAGANA":
@@ -82,13 +101,46 @@ class JLetters(object):
         if len(romaji) == 1:
             if romaji in self.vowel:
                 return self._get_char_by_vowel(letters["vowel"], romaji)
+            elif romaji == "n":
+                return letters["nn"]
+            else:
+                raise Exception("Letter can not be found. Please type your romaji correctly.")
         
-        # TODO
-        return None
+        elif len(romaji) == 2:
+            if romaji == "nn":
+                return letters[romaji]
+
+            consonant = romaji[0]
+            vowel = romaji[1]
+            if consonant in self.vowel:
+                raise Exception("First character should be consonant.")
+            elif consonant not in self.japanese_consonant:
+                raise Exception("The consonant is not used in Kana.")
+            else:
+                return self._get_char_by_vowel(letters[consonant], vowel)
+
+        elif len(romaji) == 3:  # will handle special cases like  shi, chi, and tsu
+            three_chars_romaji = {
+                "shi" : self._get_char_by_vowel(letters["s"], "i"),
+                "chi" : self._get_char_by_vowel(letters["t"], "i"),
+                "tsu" : self._get_char_by_vowel(letters["t"], "u")
+            }
+
+            if romaji in three_chars_romaji:
+                return three_chars_romaji[romaji]
+            else:
+                return Exception("Unrecognized romaji. Please type romaji correctly.")
+
+        else:
+            raise Exception("Romaji for one Japanese letter should not exceed three chars.")
+
 
 
 # For testing purpose
 if __name__ == "__main__":
     jletters = JLetters()
     print(jletters.get_jletter("a"))  # will prints あ
-    print(jletters.get_jletter("a", "TEST"))  # will raises an error
+    print(jletters.get_jletter("ka"))  # will prints か
+    print(jletters.get_jletter("tsu", "KATAKANA"))  # will prints メ
+    print(jletters.get_jletter("tu", "KATAKANA"))  # will prints メ
+
