@@ -119,8 +119,12 @@ class JLetters(object):
                     "Please type your romaji correctly.")
         
         elif len(romaji) == 2:
+
+            # Some special cases
             if romaji == "nn":
                 return letters[romaji]
+            elif romaji == "ji":
+                return self._get_char_by_vowel(letters["z"], "i")
 
             # TODO : add special cases for a letter that has different romaji
             # Example: di and ji = ぢ
@@ -157,4 +161,4 @@ class JLetters(object):
 # For testing purpose
 if __name__ == "__main__":
     jletters = JLetters()
-    print(jletters.get_jletter("a", "sasa"))
+    print(jletters.get_jletter("ji"))
