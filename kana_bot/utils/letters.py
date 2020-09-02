@@ -1,4 +1,4 @@
-from kana_bot_error import (
+from .kana_bot_error import (
     ConsonantError,
     EmptyRomajiError,
     KanaTypeError,
@@ -50,7 +50,7 @@ class JLetters(object):
     vowel = "aiueo"
     japanese_consonant = "kgsztdnhbpmyrwn" 
 
-    def _get_char_by_vowel(self, letters: str, vowel: str):
+    def _get_char_by_vowel(self, letters: str, vowel: str) -> str:
         """
         This function will grab a specific letter based on the vowel.
         
@@ -157,8 +157,16 @@ class JLetters(object):
                 "Romaji for one Japanese letter should not exceed 3 chars. " +
                 f"len('{romaji}') > 3.")
 
+    def get_all_hiragana(self) -> str:
+        all_hiragana = "".join(list(self.HIRAGANA_LETTERS.values()))
+        return all_hiragana
+
+    def get_all_katakana(self) -> str:
+        all_katakana = "".join(list(self.KATAKANA_LETTERS.values()))
+        return all_katakana
+
 
 # For testing purpose
 if __name__ == "__main__":
     jletters = JLetters()
-    print(jletters.get_jletter("ji"))
+    print(jletters.get_all_hiragana())
