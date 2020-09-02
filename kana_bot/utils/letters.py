@@ -157,12 +157,18 @@ class JLetters(object):
                 "Romaji for one Japanese letter should not exceed 3 chars. " +
                 f"len('{romaji}') > 3.")
 
-    def get_all_hiragana(self) -> str:
-        all_hiragana = "".join(list(self.HIRAGANA_LETTERS.values()))
+    def get_all_hiragana(self) -> list:
+        """Function to get all unique hiragana letters."""
+
+        letters = "".join(list(self.HIRAGANA_LETTERS.values()))
+        all_hiragana = list(set(letters))
         return all_hiragana
 
-    def get_all_katakana(self) -> str:
-        all_katakana = "".join(list(self.KATAKANA_LETTERS.values()))
+    def get_all_katakana(self) -> list:
+        """Function to get all unique katakana letters."""
+
+        letters = "".join(list(self.KATAKANA_LETTERS.values()))
+        all_katakana = list(set(letters))
         return all_katakana
 
 
