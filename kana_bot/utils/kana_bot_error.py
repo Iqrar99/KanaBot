@@ -10,6 +10,12 @@ class EmptyRomajiError(Exception):
     pass
 
 
+class KanaLengthError(Exception):
+    """Raises when input is more than one character."""
+
+    pass
+
+
 class KanaTypeError(Exception):
     """Raises when Kana type is not one of HIRAGANA and KATAKANA."""
 
@@ -24,5 +30,11 @@ class LetterNotFoundError(Exception):
 
 class RomajiLengthError(Exception):
     """Raises when input is more than three characters."""
+
+    pass
+
+
+class UnknownKanaError(Exception):
+    """Raises when input is not a kana."""
 
     pass
