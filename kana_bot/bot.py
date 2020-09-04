@@ -90,7 +90,7 @@ def process_hiragana_quiz_type(message):
 
 def process_quiz_session(message, quiz: QuizGenerator):
     cnt = quiz.get_counter()
-    if cnt < 20:
+    if cnt < quiz.QUESTION_LIMIT:
         quiz.increase_counter()
         question_now = quiz.question_list[cnt]
         question = (
