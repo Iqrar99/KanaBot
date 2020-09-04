@@ -7,12 +7,14 @@ class QuizGenerator(object):
     """Class to generate questions for quiz."""
     jletters = JLetters()
     QUESTION_LIMIT = 20  # the number of question to be displayed
+    question_counter = 0
     question_list = []
     answer_list = []
 
     def __init__(self, kana_type: str, quiz_type: int):
         self.kana_type = kana_type
         self.quiz_type = quiz_type
+        self.question_counter = 0
         if kana_type == "HIRAGANA":
             if quiz_type == 1:
                 self.create_hiragana_quiz1()
@@ -59,6 +61,12 @@ class QuizGenerator(object):
         """Romaji to Katakana"""
 
         pass
+
+    def increase_counter(self):
+        self.question_counter += 1
+
+    def get_counter(self):
+        return self.question_counter
 
 
 if __name__ == '__main__':
