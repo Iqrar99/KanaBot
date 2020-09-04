@@ -51,12 +51,12 @@ class JLetters(object):
         "nn": "ン"
     }
     VOWEL = "aiueo"
-    japanese_consonant = "kgsztdnhbpmyrwn" 
+    japanese_consonant = "kgsztdnhbpmyrwn"
 
     def _get_char_by_vowel(self, letters: str, vowel: str) -> str:
         """
         This function will grab a specific letter based on the vowel.
-        
+
         Parameters
         ----------
         letters : str
@@ -183,9 +183,19 @@ class JLetters(object):
         all_katakana = self.get_all_katakana()
 
         if kana in all_hiragana:
-            # Special case
-            if kana == "ん":
-                return "n"
+            # Special cases
+            special = {
+                "ん": "n",
+                "し": "shi",
+                "じ": "ji",
+                "ち": "chi",
+                "つ": "tsu",
+                "ぢ": "ji",
+                "づ": "zu",
+                "ふ": "fu"
+            }
+            if kana in special:
+                return special[kana]
 
             for key in self.HIRAGANA_LETTERS.keys():
                 idx = self.HIRAGANA_LETTERS[key].find(kana)
@@ -194,9 +204,19 @@ class JLetters(object):
                     return consonant + self.VOWEL[idx]
 
         elif kana in all_katakana:
-            # Special case
-            if kana == "ン":
-                return "n"
+            # Special cases
+            special = {
+                "ン": "n",
+                "シ": "shi",
+                "ジ": "ji",
+                "チ": "chi",
+                "ツ": "tsu",
+                "ヂ": "ji",
+                "ヅ": "zu",
+                "フ": "fu"
+            }
+            if kana in special:
+                return special[kana]
 
             for key in self.KATAKANA_LETTERS.keys():
                 idx = self.KATAKANA_LETTERS[key].find(kana)
