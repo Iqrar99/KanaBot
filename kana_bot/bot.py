@@ -73,8 +73,11 @@ def process_hiragana_quiz_type(message):
 
             else:
                 quiz = QuizGenerator("HIRAGANA", quiz_type)
-                msg = bot.reply_to(message, "HIRAGANA QUIZ START! Ganbatte!")
-                bot.register_next_step_handler(msg, process_quiz_session, quiz=quiz)
+                msg = bot.reply_to(message, (
+                    "HIRAGANA QUIZ START! Ganbatte!\n\n"
+                    "Type anything to start.")
+                )
+                bot.register_next_step_handler(msg, process_quiz_session, quiz)
 
         except ValueError:
             msg = bot.reply_to(message, "Quiz type should be a number only. Try again, 1 or 2?")
@@ -85,9 +88,21 @@ def process_hiragana_quiz_type(message):
         bot.register_next_step_handler(msg, process_hiragana_quiz_type)
 
 
-def process_quiz_session(message):
-    # TODO
-    pass
+def process_quiz_session(message, quiz: QuizGenerator):
+    cnt = quiz.get_counter()
+    if cnt < 20:
+        quiz.increase_counter()
+        question_now = quiz.question_list[cnt]
+        question = (
+            f"Question {cnt + 1}\n\n"
+            f"{question_now}?"
+        )
+        msg = bot.send_message(chat_id=message.chat.id, text=question)
+        bot.register_next_step_handler(msg, process_quiz_session, quiz)
+
+    else:
+        # TODO : Add quiz result
+        pass
 
 
 if __name__ == "__main__":
