@@ -90,9 +90,16 @@ def process_hiragana_quiz_type(message):
 
 def process_quiz_session(message, quiz: QuizGenerator):
     cnt = quiz.get_counter()
+    quiz.increase_counter()
+    print(f"{cnt}, {message.text}")
     if cnt < quiz.QUESTION_LIMIT:
-        quiz.increase_counter()
-        question_now = quiz.question_list[cnt]
+        if cnt > 0:
+            # Store user answers for final report purpose
+            user_answer = message.text.lower()
+            quiz.add_user_answer(user_answer)
+            quiz.add_result(user_answer == quiz.get_true_answer(cnt - 1))
+
+        question_now = quiz.get_question(cnt)
         question = (
             f"Question {cnt + 1}\n\n"
             f"{question_now}?"
@@ -101,8 +108,22 @@ def process_quiz_session(message, quiz: QuizGenerator):
         bot.register_next_step_handler(msg, process_quiz_session, quiz)
 
     else:
-        # TODO : Add quiz result
-        pass
+        # Store the last answer
+        user_answer = message.text.lower()
+        quiz.add_user_answer(user_answer)
+        quiz.add_result(user_answer == quiz.get_true_answer(cnt - 1))
+
+        result_msg = "Your quiz result!\n\n"
+        for idx in range(quiz.QUESTION_LIMIT):
+            result_msg += "{}. {} : {} = {}\n".format(
+                idx + 1,
+                quiz.get_question(idx),
+                quiz.get_user_answer(idx),
+                "✅" if quiz.get_result(idx) else "❌"
+            )
+        result_msg += f"\nYour Score: {quiz.get_score()}/{quiz.QUESTION_LIMIT * 10}"
+        bot.send_message(chat_id=message.chat.id, text=result_msg)
+        bot.send_message(chat_id=message.chat.id, text="Type /start, if you want to try again.")
 
 
 if __name__ == "__main__":

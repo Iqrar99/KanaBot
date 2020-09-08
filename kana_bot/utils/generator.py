@@ -10,11 +10,20 @@ class QuizGenerator(object):
     question_counter = 0
     question_list = []
     answer_list = []
+    user_answer_list = []
+    result = []
+    score = 0
 
     def __init__(self, kana_type: str, quiz_type: int):
         self.kana_type = kana_type
         self.quiz_type = quiz_type
         self.question_counter = 0
+        self.question_list = []
+        self.answer_list = []
+        self.user_answer_list = []
+        self.result = []
+        self.score = 0
+
         if kana_type == "HIRAGANA":
             if quiz_type == 1:
                 self.create_hiragana_quiz1()
@@ -62,11 +71,35 @@ class QuizGenerator(object):
 
         pass
 
+    def get_score(self) -> int:
+        for r in self.result:
+            self.score += 10 if r else 0
+
+        return self.score
+
     def increase_counter(self):
         self.question_counter += 1
 
-    def get_counter(self):
+    def get_counter(self) -> int:
         return self.question_counter
+
+    def get_question(self, idx: int) -> str:
+        return self.question_list[idx]
+
+    def add_user_answer(self, answer: str):
+        self.user_answer_list.append(answer)
+
+    def get_user_answer(self, idx: int) -> str:
+        return self.user_answer_list[idx]
+
+    def get_true_answer(self, idx: int) -> str:
+        return self.answer_list[idx]
+
+    def add_result(self, result: bool):
+        self.result.append(result)
+
+    def get_result(self, idx: int) -> bool:
+        return self.result[idx]
 
 
 if __name__ == '__main__':
